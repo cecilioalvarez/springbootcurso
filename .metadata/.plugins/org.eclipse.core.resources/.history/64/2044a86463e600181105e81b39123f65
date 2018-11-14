@@ -1,0 +1,9 @@
+package com.arquitecturajava.spring;
+
+public class Servicio {
+
+	public String mensaje() {
+		
+		return "hola desde spring";
+	}
+}

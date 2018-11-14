@@ -1,0 +1,6 @@
+package com.arquitecturajava.plantillas;
+
+@Controller
+public class HolaController {
+
+}

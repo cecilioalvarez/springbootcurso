@@ -1,0 +1,6 @@
+package com.arquitecturajava.spring;
+
+@Controller
+public class HolaController {
+
+}

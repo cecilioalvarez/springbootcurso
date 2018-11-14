@@ -1,0 +1,11 @@
+<table>
+   <th:block th:each="user : ${listaPersonas}">
+      <tr>
+         <td th:text="${user.login}">...</td>
+         <td th:text="${user.name}">...</td>
+      </tr>
+      <tr>
+         <td colspan="2" th:text="${user.address}">...</td>
+      </tr>
+   </th:block>
+</table>

@@ -1,0 +1,8 @@
+package com.arquitecturajava.plantillas;
+
+import org.springframework.stereotype.Controller;
+
+@Controller
+public class HolaController {
+
+}

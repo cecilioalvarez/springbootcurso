@@ -1,0 +1,13 @@
+package com.arquitecturajava.spring;
+
+import org.springframework.stereotype.Controller;
+
+@Controller
+public class HolaController {
+
+	@RequestMapping("/mensaje")
+	public String mensaje() {
+		
+		return "mensaje";
+	}
+}

@@ -1,0 +1,12 @@
+package com.arquitecturajava.sprinbootweb;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class SprinbootwebApplication {
+
+	public static void main(String[] args) {
+		SpringApplication.run(SprinbootwebApplication.class, args);
+	}
+}

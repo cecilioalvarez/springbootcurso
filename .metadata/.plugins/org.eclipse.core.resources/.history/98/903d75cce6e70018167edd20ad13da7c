@@ -1,0 +1,9 @@
+package com.arquitecturajava.app1;
+
+public class Persona {
+
+	private String nombre;
+	private String apellidos;
+	private int edad;
+	
+}

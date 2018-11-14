@@ -1,0 +1,12 @@
+package com.arquitecturajava.app1;
+
+public class PersonasServices {
+	
+	static {
+		
+		Persona p1= new Persona("pepe","perez",20);
+		Persona p2= new Persona("ana","sanchez",30);
+		
+	}
+
+}

@@ -1,0 +1,23 @@
+package com.arquitecturajava.app1;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+
+@Controller
+public class PersonaController {
+
+	@Autowired
+	PersonasServices servicio;
+	
+	public List<Persona> mostrarTodas (Model modelo) {
+		
+		modelo.addAttribute("listaPersonas",servicio.buscarTodos());
+		
+		return null;
+		
+		
+	}
+}

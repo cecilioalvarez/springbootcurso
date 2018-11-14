@@ -1,0 +1,8 @@
+package com.arquitecturajava.app1;
+
+import org.springframework.stereotype.Repository;
+
+@Repository
+public class PersonaRepository {
+
+}

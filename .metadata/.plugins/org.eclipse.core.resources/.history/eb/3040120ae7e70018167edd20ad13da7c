@@ -1,0 +1,12 @@
+package com.arquitecturajava.app1;
+
+import java.util.List;
+
+public class PersonaController {
+
+	
+	public List<Persona> mostrarTodas() {
+		
+		
+	}
+}

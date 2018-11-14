@@ -1,0 +1,17 @@
+package com.arquitecturajava.spring;
+
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+
+public class SpringMain {
+
+	public static void main(String[] args) {
+	
+		
+	AnnotationConfigApplicationContext contexto= new AnnotationConfigApplicationContext();
+	
+	Servicio miservicio= contexto.getBean(Servicio.class);
+	miservicio.
+
+	}
+
+}

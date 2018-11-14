@@ -1,0 +1,15 @@
+package com.arquitecturajava.app1;
+
+import java.util.List;
+
+import org.springframework.stereotype.Controller;
+
+@Controller
+public class PersonaController {
+
+	
+	public List<Persona> mostrarTodas() {
+		
+		
+	}
+}

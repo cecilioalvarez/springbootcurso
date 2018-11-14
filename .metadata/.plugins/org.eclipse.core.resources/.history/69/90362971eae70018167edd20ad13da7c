@@ -1,0 +1,10 @@
+<table>
+   <th:block th:each="persona : ${listaPersonas}">
+      <tr>
+         <td th:text="${persona.nombre}"></td>
+         <td th:text="${persona.apellidos}"></td>
+          <td th:text="${persona.edad}"></td>
+      </tr>
+  
+   </th:block>
+</table>

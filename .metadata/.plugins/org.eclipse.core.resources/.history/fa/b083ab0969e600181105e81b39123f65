@@ -1,0 +1,25 @@
+package com.arquitecturajava.spring;
+
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
+
+@Configuration
+@ComponentScan("com.arquitecturajava.spring")
+public class SpringConfigurador {
+
+	
+	@Bean
+	public ViewResolver viewResolver() {
+		InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
+		viewResolver.setViewClass(JstlView.class);
+		viewResolver.setExposeContextBeansAsAttributes(true);
+		viewResolver.setExposedContextBeanNames("SystemHelper","ApplicationHelper");
+		viewResolver.setPrefix("/WEB-INF/views/pages/");
+		viewResolver.setSuffix(".jsp");
+
+		return viewResolver;
+	}
+}
+
+
+
