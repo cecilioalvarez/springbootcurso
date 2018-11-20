@@ -1,0 +1,124 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+
+<link rel="stylesheet"
+	href="/webjars/bootstrap/4.1.3/css/bootstrap.min.css">
+<script src="/webjars/jquery/3.0.0/jquery.min.js"></script>
+<script src="/webjars/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+
+$(document).ready(function() {
+	
+  	$("#formulario").hide();
+	
+	cargarTabla();
+	
+	$("#formularioNuevo").submit(function() {
+		
+
+		$("#listado").hide();
+		$("#formulario").show();
+		return false;
+	})
+	
+	
+	$("#formulario").submit(function() {
+		
+		var persona={nombre:$("#nombre").val(),apellidos:$("#apellidos").val(),edad:$("#edad").val()};
+		var peticion=$.ajax({type:"POST" ,
+				url:"http://localhost:8080/webapi/personas",
+				contentType: "application/json; charset=utf-8",
+				data:JSON.stringify(persona)
+				
+		}).done(function() {
+				
+			return cargarTabla();
+			
+		}).then(function() {
+			
+
+			$("#listado").show();
+			$("#formulario").hide();
+			
+		});
+		
+	
+		return false;
+	})
+	
+	
+	
+	
+})
+
+function cargarTabla() {
+	
+	
+	return $.get("http://localhost:8080/webapi/personas",function(listaPersonas) {
+		
+		$(".table").empty();
+		
+		listaPersonas.forEach(function(persona) {
+			
+				$(".table").append(plantillaTabla(persona));
+		})
+		
+	});
+	
+}
+
+function plantillaTabla(persona) {
+	//ES6
+	var plantilla=
+		`<tr>
+	     <td>${persona.nombre}</td>
+	     <td>${persona.apellidos}</td>
+	     <td>${persona.edad}</td>
+	  </tr>`
+	  return plantilla;
+}
+
+</script>
+<style>
+table, form {
+	margin: 20px;
+}
+</style>
+</head>
+
+<div id="listado">
+	<table class="table">
+
+	</table>
+
+
+	<form action="formulario" id="formularioNuevo">
+		<input type="submit" value="nuevo" class="btn btn-primary" />
+	</form>
+
+</div>
+<div id="formulario">
+<form action="insertar">
+		<div class="form-group">
+			<label for="nombre">Nombre:</label> <input type="text" name="nombre"
+				class="form-control" id="nombre" />
+		</div>
+
+		<div class="form-group">
+			<label for="apellidos">Apellidos:</label><input type="text"
+				name="apellidos" class="form-control" id="apellidos" />
+		</div>
+		<div class="form-group">
+			<label for="edad">Edad:</label><input type="text" name="edad"
+				class="form-control" id="edad" />
+		</div>
+		<div class="form-group">
+			<input type="submit" value="enviar" class="btn btn-primary" />
+		</div>
+	</form>
+
+</div>
+
+</html>

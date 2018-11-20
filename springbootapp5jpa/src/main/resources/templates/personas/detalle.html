@@ -1,0 +1,19 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<link rel="stylesheet" href="/webjars/bootstrap/4.1.3/css/bootstrap.min.css">
+<script src="/webjars/jquery/3.0.0/jquery.min.js"></script>
+<script src="/webjars/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+</head>
+<body>
+<ul class="list-group">
+<li class="list-group-item" th:text="${persona.nombre}">
+</li>
+<li class="list-group-item"  th:text="${persona.apellidos}">
+</li>
+<li class="list-group-item"  th:text="${persona.edad}">
+</li>
+</ul>
+   <td><a th:href="@{listado}"  class="btn btn-primary">volver</a></td>
+    
+</body>
+</html>
