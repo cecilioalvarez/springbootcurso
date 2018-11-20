@@ -13,7 +13,7 @@ import io.jsonwebtoken.SignatureAlgorithm;
 public class TokenService {
 
 	
-	 private long expiracion = 3600; // 1hora
+	 private long expiracion = 36000000; // 1hora
      private String claveEncriptar = "superClave";
      private String prefijoToken = "Bearer";
      private String cabeceraHttp = "Authorization";
@@ -26,15 +26,19 @@ public class TokenService {
              .setExpiration(new Date(System.currentTimeMillis() + expiracion))
              .signWith(SignatureAlgorithm.HS512, claveEncriptar)
              .compact();
+         
+         System.out.println(JWT);
          response.addHeader(cabeceraHttp, prefijoToken + " " + JWT);
      }
      public Authentication leeToken(HttpServletRequest request) {
          String token = request.getHeader(cabeceraHttp);
+         System.out.println("el token es <"+token.substring(token.indexOf(" ")+1)+">");
+         String tokenReal=token.substring(token.indexOf(" ")+1);
          if (token != null) {
              // parse the token.
              String usuario = Jwts.parser()
                  .setSigningKey(claveEncriptar)
-                 .parseClaimsJws(token)
+                 .parseClaimsJws(tokenReal)
                  .getBody()
                  .getSubject();
              if (usuario != null) // we managed to retrieve a user

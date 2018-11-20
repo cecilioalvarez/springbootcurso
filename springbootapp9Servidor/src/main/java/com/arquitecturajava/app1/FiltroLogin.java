@@ -17,28 +17,40 @@ import java.io.IOException;
 
 public class FiltroLogin extends AbstractAuthenticationProcessingFilter{
 
-    private TokenService tokenAuthenticationService;
+    private TokenService tokenService;
 
     public FiltroLogin(String url, AuthenticationManager authenticationManager)
     {
         super(new AntPathRequestMatcher(url));
         setAuthenticationManager(authenticationManager);
-        tokenAuthenticationService = new TokenService();
+        tokenService = new TokenService();
     }
 
     @Override
     public Authentication attemptAuthentication(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse)
             throws AuthenticationException, IOException, ServletException {
-        Usuario credentials = new ObjectMapper().readValue(httpServletRequest.getInputStream(),Usuario.class);
-        UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(credentials.getNombre(), credentials.getPassword());
+        
+    	System.out.println("llega");
+    	// comprueba que el usuario es valido y existe
+    	Usuario usuario = new ObjectMapper().readValue(httpServletRequest.getInputStream(),Usuario.class);
+        UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(usuario.getNombre(), usuario.getPassword());
+       // System.out.println(usuario.getNombre());
+        //System.out.println(usuario.getPassword());
+        //System.out.println("hola");
+       System.out.println(getAuthenticationManager());
+       System.out.println(getAuthenticationManager().authenticate(token));
+       
         return getAuthenticationManager().authenticate(token);
     }
 
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authentication)
             throws IOException, ServletException{
-        String name = authentication.getName();
-        tokenAuthenticationService.creaToken(response,name);
+    	
+    	
+    	System.out.println("ha ido bien");
+        String nombre = authentication.getName();
+        tokenService.creaToken(response,nombre);
     }
 }
 
