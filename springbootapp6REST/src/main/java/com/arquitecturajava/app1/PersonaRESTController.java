@@ -20,8 +20,6 @@ public class PersonaRESTController {
 	@Autowired
 	private PersonasServices personasService;
 	
-
-	
 	@GetMapping("/personas")
 	public Iterable<Persona> buscarTodos() {
 		

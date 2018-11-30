@@ -1,0 +1,225 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+
+<link rel="stylesheet"
+	href="/webjars/bootstrap/4.1.3/css/bootstrap.min.css">
+<script src="/webjars/jquery/3.0.0/jquery.min.js"></script>
+<script src="/webjars/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+
+var header;
+
+$(document).ready(function() {
+	
+  	$("#formulario").hide();
+  	$("#listado").hide();
+	
+	//cargarTabla();
+	
+	$("#formularioNuevo").submit(function() {
+		
+
+		$("#listado").hide();
+		$("#formulario").show();
+		console.log("la cabecera al pulsar en nuevo es "+header);
+		return false;
+	});
+
+	
+	
+    $("#formularioLogin").submit(function() {
+		
+
+		logearse();
+		return false;
+	});
+
+	
+	
+	
+	$("#formulario").submit(function() {
+		
+		var persona={nombre:$("#nombre").val(),apellidos:$("#apellidos").val(),edad:$("#edad").val()};
+		
+		console.log("la cabecera del formulario es: "+ header);
+		var peticion=$.ajax({type:"POST" ,
+				beforeSend: function(request) {
+			    request.setRequestHeader("Authorization", header);
+			    console.log(header);
+			  },
+			  crossDomain: true,
+				xhrFields: {
+			      withCredentials: true
+			   },
+				url:"http://localhost:8080/webapi/personas",
+				contentType: "application/json; charset=utf-8",
+				data:JSON.stringify(persona)
+				
+		}).done(function() {
+				
+			return cargarTabla();
+			
+		}).then(function() {
+			
+
+			$("#listado").show();
+			$("#formulario").hide();
+			
+		});
+		
+	
+		return false;
+	})
+	
+	
+	
+	
+})
+
+function cargarTabla() {
+	
+	console.log("la cabecera al cargar lista es : "+ header);
+	
+	return $.ajax({type:"GET" ,
+		url:"http://localhost:8080/webapi/personas",
+		contentType: "application/json; charset=utf-8",
+		crossDomain: true,
+		beforeSend: function(request) {
+		    request.setRequestHeader("Authorization", header);
+		  },
+		xhrFields: {
+		      withCredentials: true
+		   },
+		
+		success:function(datos,status,peticion) {
+			
+				//console.log(peticion.getResponseHeader("authorization"));
+				//header=peticion.getResponseHeader("authorization");
+				$("#login").hide();
+				$("#listado").show();
+		}
+		
+	})
+	
+}
+
+function logearse() {
+	
+	
+	var usuario={nombre:$("#usuario").val(),password:$("#clave").val()};
+	console.log(usuario);
+	var peticion=$.ajax({type:"POST" ,
+			url:"http://localhost:8080/webapi/login",
+			contentType: "application/json; charset=utf-8",
+			crossDomain: true,
+			xhrFields: {
+			      withCredentials: true
+			   },
+			data:JSON.stringify(usuario),
+			success:function(datos,status,peticion) {
+				
+					console.log(peticion.getResponseHeader("authorization"));
+					header=peticion.getResponseHeader("authorization");				
+					console.log(header);
+					$("#login").hide();
+					$("#listado").show();
+			}
+			
+	}).then(function() {
+		
+		return cargarTabla();
+		
+	}).then(function(listaPersonas) {
+		
+		
+		console.log(listaPersonas);
+		
+		$(".table").empty();
+		
+		listaPersonas.forEach(function(persona) {
+				console.log(persona);
+				$(".table").append(plantillaTabla(persona));
+		})
+		
+	});
+	
+	
+	
+	
+	
+}
+
+function plantillaTabla(persona) {
+	//ES6
+	var plantilla=
+		`<tr>
+	     <td>${persona.nombre}</td>
+	     <td>${persona.apellidos}</td>
+	     <td>${persona.edad}</td>
+	  </tr>`
+	  return plantilla;
+}
+
+</script>
+<style>
+table, form {
+	margin: 20px;
+}
+</style>
+</head>
+
+<div id="login">
+	
+	<form action="" id="formularioLogin">
+		<div class="form-group">
+			<label for="usuario">Usuario:</label> <input type="text" name="usuario"
+				class="form-control" id="usuario" />
+		</div>
+
+		<div class="form-group">
+			<label for="clave">Clave:</label><input type="text"
+				name="clave" class="form-control" id="clave" />
+		</div>
+	
+		<div class="form-group">
+			<input type="submit" value="enviar" class="btn btn-primary" />
+		</div>
+	</form>
+</div>
+
+<div id="listado">
+	<table class="table">
+
+	</table>
+
+
+	<form action="formulario" id="formularioNuevo">
+		<input type="submit" value="nuevo" class="btn btn-primary" />
+	</form>
+
+</div>
+<div id="formulario">
+<form action="insertar">
+		<div class="form-group">
+			<label for="nombre">Nombre:</label> <input type="text" name="nombre"
+				class="form-control" id="nombre" />
+		</div>
+
+		<div class="form-group">
+			<label for="apellidos">Apellidos:</label><input type="text"
+				name="apellidos" class="form-control" id="apellidos" />
+		</div>
+		<div class="form-group">
+			<label for="edad">Edad:</label><input type="text" name="edad"
+				class="form-control" id="edad" />
+		</div>
+		<div class="form-group">
+			<input type="submit" value="enviar" class="btn btn-primary" />
+		</div>
+	</form>
+
+</div>
+
+</html>
